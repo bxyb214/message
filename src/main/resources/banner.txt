@@ -1,0 +1,2 @@
+${AnsiColor.BRIGHT_BLUE}:: SongZi 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: http://gitlab.cyanway-lab.com/hx-insurance/hx-insurance-server.git ::${AnsiColor.DEFAULT}

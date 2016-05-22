@@ -1,0 +1,17 @@
+# Maven #
+target/
+
+# IDEA #
+.idea/
+*.iml
+
+# Eclipse #
+.settings/
+.classpath
+.project
+
+# MQ #
+FFDC/
+
+# jrebel #
+src/main/resources/rebel.xml
