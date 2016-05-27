@@ -1,5 +1,7 @@
 package com.cmbc.most.config;
 
+import com.ibm.mq.jms.MQConnectionFactory;
+import com.ibm.mq.jms.MQQueueConnectionFactory;
 import com.ibm.mq.jms.MQXAConnectionFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 import lombok.Data;
@@ -27,23 +29,11 @@ public class JMSConfig {
     @Inject
     JMSConfig.MQProperties properties;
 
-    //监听队列
-    @Bean(name = "DefaultJmsListenerContainerFactory")
-    public DefaultJmsListenerContainerFactory provideJmsListenerContainerFactory(PlatformTransactionManager transactionManager) {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory());
-        factory.setTransactionManager(transactionManager);
-        factory.setConcurrency("5-10");
-        factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
-        factory.setSessionTransacted(true);
-        return factory;
-    }
-
     @Bean
     public ConnectionFactory connectionFactory() {
-        MQXAConnectionFactory  factory = null;
+        MQQueueConnectionFactory factory = null;
         try {
-            factory = new MQXAConnectionFactory();
+            factory = new MQQueueConnectionFactory();
             factory.setHostName(properties.getHost());
             factory.setPort(properties.getPort());
             factory.setQueueManager(properties.getQueueManager());
@@ -60,7 +50,18 @@ public class JMSConfig {
     @Bean(name = "JmsTemplate")
     public JmsTemplate provideJmsTemplate() {
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
+        jmsTemplate.setPubSubNoLocal(false);
         return jmsTemplate;
+    }
+
+    //监听队列
+    @Bean(name = "DefaultJmsListenerContainerFactory")
+    public DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory() {
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory());
+        factory.setConcurrency("5-10");
+        factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
+        return factory;
     }
 
     @ConfigurationProperties(prefix = "cmbc.most.mq")

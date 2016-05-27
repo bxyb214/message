@@ -24,44 +24,46 @@
 
 package com.cmbc.most.service;
 
+import com.cmbc.most.mapper.ProcedureMapper;
+import com.cmbc.most.mapper.SMSMapper;
+import com.cmbc.most.model.Procedure;
+import com.cmbc.most.model.SMS;
 import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.cmbc.most.mapper.CityMapper;
-import com.cmbc.most.model.City;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
- * @author liuzh
+ * @author Yan
  * @since 2015-12-19 11:09
  */
 @Service
-public class CityService {
+public class ProcedureService {
 
-    @Autowired
-    private CityMapper cityMapper;
+    @Inject
+    private ProcedureMapper procedureMapper;
 
-    public List<City> getAll(City city) {
-        if (city.getPage() != null && city.getRows() != null) {
-            PageHelper.startPage(city.getPage(), city.getRows(), "id");
+    public List<Procedure> getAll(Procedure procedure) {
+        if (procedure.getPage() != null && procedure.getRows() != null) {
+            PageHelper.startPage(procedure.getPage(), procedure.getRows(), "id");
         }
-        return cityMapper.selectAll();
+        return procedureMapper.selectAll();
     }
 
-    public City getById(Integer id) {
-        return cityMapper.selectByPrimaryKey(id);
+    public Procedure getById(Integer id) {
+        return procedureMapper.selectByPrimaryKey(id);
     }
 
     public void deleteById(Integer id) {
-        cityMapper.deleteByPrimaryKey(id);
+        procedureMapper.deleteByPrimaryKey(id);
     }
 
-    public void save(City country) {
-        if (country.getId() != null) {
-            cityMapper.updateByPrimaryKey(country);
+    public void save(Procedure procedure) {
+        if (procedure.getId() != null) {
+            procedureMapper.updateByPrimaryKey(procedure);
         } else {
-            cityMapper.insert(country);
+            procedureMapper.insert(procedure);
         }
     }
 }

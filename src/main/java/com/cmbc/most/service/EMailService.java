@@ -22,14 +22,49 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.mapper;
+package com.cmbc.most.service;
 
-import com.cmbc.most.util.MyMapper;
-import com.cmbc.most.model.City;
+import com.cmbc.most.mapper.EMailMapper;
+import com.cmbc.most.model.EMail;
+import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.cmbc.most.mapper.SMSMapper;
+import com.cmbc.most.model.SMS;
+
+import javax.inject.Inject;
+import java.util.List;
 
 /**
- * @author liuzh_3nofxnp
- * @since 2016-01-22 22:17
+ * @author Yan
+ * @since 2015-12-19 11:09
  */
-public interface CityMapper extends MyMapper<City> {
+@Service
+public class EMailService {
+
+    @Inject
+    private EMailMapper emailMapper;
+
+    public List<EMail> getAll(EMail email) {
+        if (email.getPage() != null && email.getRows() != null) {
+            PageHelper.startPage(email.getPage(), email.getRows(), "id");
+        }
+        return emailMapper.selectAll();
+    }
+
+    public EMail getById(Integer id) {
+        return emailMapper.selectByPrimaryKey(id);
+    }
+
+    public void deleteById(Integer id) {
+        emailMapper.deleteByPrimaryKey(id);
+    }
+
+    public void save(EMail email) {
+        if (email.getId() != null) {
+            emailMapper.updateByPrimaryKey(email);
+        } else {
+            emailMapper.insert(email);
+        }
+    }
 }

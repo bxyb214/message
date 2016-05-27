@@ -22,31 +22,15 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.model;
+package com.cmbc.most.mapper;
+
+import com.cmbc.most.model.EMail;
+import com.cmbc.most.util.MyMapper;
 
 /**
- * @author liuzh_3nofxnp
- * @since 2016-01-22 22:16
+ * @author Yan
+ * @since 2016-01-22 22:17
  */
-public class City extends BaseEntity {
-    private String name;
-
-    private String state;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
+public interface EMailMapper extends MyMapper<EMail> {
 
 }

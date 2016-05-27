@@ -27,13 +27,13 @@ package com.cmbc.most.model;
 /**
  * 用户信息
  *
- * @author liuzh
+ * @author Yan
  * @since 2016-01-31 21:39
  */
-public class UserInfo extends BaseEntity {
+public class AppInfo extends BaseEntity {
+
     private String username;
     private String password;
-    private String usertype;
     private Integer enabled;
     private String qq;
     private String email;
@@ -53,14 +53,6 @@ public class UserInfo extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getUsertype() {
-        return usertype;
-    }
-
-    public void setUsertype(String usertype) {
-        this.usertype = usertype;
     }
 
     public Integer getEnabled() {

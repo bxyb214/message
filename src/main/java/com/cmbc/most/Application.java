@@ -2,7 +2,9 @@ package com.cmbc.most;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +19,9 @@ import org.slf4j.Logger;
  * @author Yan
  * @since 2015-12-12 18:22
  */
-@Controller
-@EnableWebMvc
-@SpringBootApplication
-public class Application extends WebMvcConfigurerAdapter {
+@ComponentScan
+@EnableAutoConfiguration
+public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
@@ -37,6 +38,6 @@ public class Application extends WebMvcConfigurerAdapter {
 
     @RequestMapping("/")
     String home() {
-        return "redirect:countries";
+        return "redirect:api/emails";
     }
 }

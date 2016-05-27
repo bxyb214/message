@@ -24,22 +24,19 @@
 
 package com.cmbc.most.web.rest;
 
-import com.cmbc.most.model.Country;
-import com.cmbc.most.service.CountryService;
+import com.cmbc.most.model.SMS;
+import com.cmbc.most.service.SMSService;
 import com.cmbc.most.web.rest.util.PaginationUtil;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.inject.Inject;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -49,20 +46,20 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/api")
-public class CountryResource {
+public class SMSResource {
 
-    @Autowired
-    private CountryService countryService;
+    @Inject
+    private SMSService smsService;
 
     /**
-     * GET  /countries -> get a page of countries.
+     * GET  /smss -> 获取一页短信.
      */
-    @RequestMapping(value = "/countries",
+    @RequestMapping(value = "/smss",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Country>> getAll(Country country) throws URISyntaxException {
-        List<Country> countryList = countryService.getAll(country);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageInfo<>(countryList), "/api/countries");
-        return new ResponseEntity<>(countryList, headers, HttpStatus.OK);
+    public ResponseEntity<List<SMS>> getAll(SMS sms) throws URISyntaxException {
+        List<SMS> smsList = smsService.getAll(sms);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageInfo<>(smsList), "/api/countries");
+        return new ResponseEntity<>(smsList, headers, HttpStatus.OK);
     }
 }

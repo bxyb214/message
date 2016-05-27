@@ -24,44 +24,45 @@
 
 package com.cmbc.most.service;
 
+import com.cmbc.most.mapper.AppInfoMapper;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.cmbc.most.mapper.CountryMapper;
-import com.cmbc.most.model.Country;
+import com.cmbc.most.model.AppInfo;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
  * @author liuzh
- * @since 2015-12-19 11:09
+ * @since 2016-01-31 21:42
  */
 @Service
-public class CountryService {
+public class AppInfoService {
 
-    @Autowired
-    private CountryMapper countryMapper;
+    @Inject
+    private AppInfoMapper appInfoMapper;
 
-    public List<Country> getAll(Country country) {
-        if (country.getPage() != null && country.getRows() != null) {
-            PageHelper.startPage(country.getPage(), country.getRows(), "id");
+    public List<AppInfo> getAll(AppInfo appInfo) {
+        if (appInfo.getPage() != null && appInfo.getRows() != null) {
+            PageHelper.startPage(appInfo.getPage(), appInfo.getRows(), "id");
         }
-        return countryMapper.selectAll();
+        return appInfoMapper.selectAll();
     }
 
-    public Country getById(Integer id) {
-        return countryMapper.selectByPrimaryKey(id);
+    public AppInfo getById(Integer id) {
+        return appInfoMapper.selectByPrimaryKey(id);
     }
 
     public void deleteById(Integer id) {
-        countryMapper.deleteByPrimaryKey(id);
+        appInfoMapper.deleteByPrimaryKey(id);
     }
 
-    public void save(Country country) {
-        if (country.getId() != null) {
-            countryMapper.updateByPrimaryKey(country);
+    public void save(AppInfo appInfo) {
+        if (appInfo.getId() != null) {
+            appInfoMapper.updateByPrimaryKey(appInfo);
         } else {
-            countryMapper.insert(country);
+            appInfoMapper.insert(appInfo);
         }
     }
 }

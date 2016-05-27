@@ -24,32 +24,18 @@
 
 package com.cmbc.most.model;
 
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+@Table(name = "sms")
+public class SMS extends MessageEntity {
 
-import javax.persistence.*;
-import java.util.Date;
+    /**
+     *  消息内容
+     */
+    private String smsContent;
 
-/**
- * 基础信息
- *
- * @author liuzh
- * @since 2016-01-31 21:42
- */
-@Data
-public class BaseEntity {
-
-    @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Transient
-    @JsonIgnore
-    private Integer page = 1;
-
-    @Transient
-    @JsonIgnore
-    private Integer rows = 10;
+    /**
+     * 接收者
+     */
+    private String smsRecevier;
 }

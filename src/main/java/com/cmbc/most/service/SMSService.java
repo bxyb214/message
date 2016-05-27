@@ -22,53 +22,46 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.model;
+package com.cmbc.most.service;
 
-public class Country extends BaseEntity {
-    /**
-     * 名称
-     */
-    private String countryname;
+import com.cmbc.most.mapper.SMSMapper;
+import com.cmbc.most.model.SMS;
+import com.github.pagehelper.PageHelper;
+import org.springframework.stereotype.Service;
 
-    /**
-     * 代码
-     */
-    private String countrycode;
+import javax.inject.Inject;
+import java.util.List;
 
-    /**
-     * 获取名称
-     *
-     * @return countryname - 名称
-     */
-    public String getCountryname() {
-        return countryname;
+/**
+ * @author Yan
+ * @since 2015-12-19 11:09
+ */
+@Service
+public class SMSService {
+
+    @Inject
+    private SMSMapper smsMapper;
+
+    public List<SMS> getAll(SMS sms) {
+        if (sms.getPage() != null && sms.getRows() != null) {
+            PageHelper.startPage(sms.getPage(), sms.getRows(), "id");
+        }
+        return smsMapper.selectAll();
     }
 
-    /**
-     * 设置名称
-     *
-     * @param countryname 名称
-     */
-    public void setCountryname(String countryname) {
-        this.countryname = countryname;
+    public SMS getById(Integer id) {
+        return smsMapper.selectByPrimaryKey(id);
     }
 
-    /**
-     * 获取代码
-     *
-     * @return countrycode - 代码
-     */
-    public String getCountrycode() {
-        return countrycode;
+    public void deleteById(Integer id) {
+        smsMapper.deleteByPrimaryKey(id);
     }
 
-    /**
-     * 设置代码
-     *
-     * @param countrycode 代码
-     */
-    public void setCountrycode(String countrycode) {
-        this.countrycode = countrycode;
+    public void save(SMS sms) {
+        if (sms.getId() != null) {
+            smsMapper.updateByPrimaryKey(sms);
+        } else {
+            smsMapper.insert(sms);
+        }
     }
-
 }

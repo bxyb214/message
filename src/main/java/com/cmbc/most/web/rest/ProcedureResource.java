@@ -24,24 +24,21 @@
 
 package com.cmbc.most.web.rest;
 
+import com.cmbc.most.model.Procedure;
+import com.cmbc.most.service.ProcedureService;
 import com.cmbc.most.web.rest.util.HeaderUtil;
 import com.cmbc.most.web.rest.util.PaginationUtil;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.Timed;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import com.cmbc.most.model.UserInfo;
-import com.cmbc.most.service.UserInfoService;
 
+import javax.inject.Inject;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -51,70 +48,70 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-public class UserInfoResource {
+public class ProcedureResource {
 
-    @Autowired
-    private UserInfoService userInfoService;
+    @Inject
+    private ProcedureService procedureService;
 
     /**
-     * GET  /users -> get all of users.
+     * GET  /procedures -> 获取所有规则.
      */
-    @RequestMapping(value = "/users",
+    @RequestMapping(value = "/procedures",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<UserInfo>> getAll(UserInfo userInfo) throws URISyntaxException {
-        List<UserInfo> userInfoList = userInfoService.getAll(userInfo);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageInfo<>(userInfoList), "/api/users");
-        return new ResponseEntity<>(userInfoList, headers, HttpStatus.OK);
+    public ResponseEntity<List<Procedure>> getAll(Procedure procedure) throws URISyntaxException {
+        List<Procedure> procedureList = procedureService.getAll(procedure);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageInfo<>(procedureList), "/api/procedures");
+        return new ResponseEntity<>(procedureList, headers, HttpStatus.OK);
     }
 
     /**
-     * GET  /user -> Get a new user.
+     * GET  /procedure/{id} -> 通过ID获取单个规则.
      */
-    @RequestMapping(value = "/user/{id}",
+    @RequestMapping(value = "/procedure/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserInfo view(@PathVariable Integer id) {
-        UserInfo userInfo = userInfoService.getById(id);
-        return userInfo;
+    public Procedure view(@PathVariable Integer id) {
+        Procedure procedure = procedureService.getById(id);
+        return procedure;
     }
 
     /**
-     * DELETE  /user -> Delete a  user.
+     * DELETE  /procedure -> 删除某个规则
      */
-    @RequestMapping(value = "/user/{id}",
+    @RequestMapping(value = "/procedure/{id}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        userInfoService.deleteById(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("User", id.toString())).build();
+        procedureService.deleteById(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("规则", id.toString())).build();
     }
 
 
     /**
-     * POST  /user -> Create a new user.
+     * POST  /procedure -> 创建某个规则.
      */
-    @RequestMapping(value = "/user",
+    @RequestMapping(value = "/procedure",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> add(UserInfo userInfo) {
-        userInfoService.save(userInfo);
+    public ResponseEntity<?> add(Procedure procedure) {
+        procedureService.save(procedure);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
-     * PUT  /user -> update a user.
+     * PUT  /procedure -> 更新某个规则.
      */
-    @RequestMapping(value = "/user",
+    @RequestMapping(value = "/procedure",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(UserInfo userInfo) {
-        if(userInfo.getId() == null){
-           return add(userInfo);
+    public ResponseEntity<?> save(Procedure procedure) {
+        if(procedure.getId() == null){
+           return add(procedure);
         }
 
-        userInfoService.save(userInfo);
+        procedureService.save(procedure);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("User", userInfo.getId().toString())).build();
+                .headers(HeaderUtil.createEntityUpdateAlert("规则", procedure.getId().toString())).build();
     }
 }

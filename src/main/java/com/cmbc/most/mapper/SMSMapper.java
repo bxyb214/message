@@ -24,9 +24,9 @@
 
 package com.cmbc.most.mapper;
 
-import com.cmbc.most.model.Country;
+import com.cmbc.most.model.SMS;
 import com.cmbc.most.util.MyMapper;
 
-public interface CountryMapper extends MyMapper<Country> {
+public interface SMSMapper extends MyMapper<SMS> {
 
 }

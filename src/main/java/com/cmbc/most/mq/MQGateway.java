@@ -17,17 +17,17 @@ import javax.jms.TextMessage;
 @Transactional
 @lombok.extern.slf4j.Slf4j
 public class MQGateway {
+
     @Inject
-    @Named("JmsTemplate")
     JmsTemplate jmsTemplate;
 
     @Inject
     private JMSConfig.MQProperties properties;
 
     @JmsListener(destination = "${cmbc.most.mq.incomingQueue}", containerFactory = "DefaultJmsListenerContainerFactory")
-    public void onMessage(TextMessage message) throws JMSException {
+    public void onMessage(String message) throws JMSException {
         log.info("onMessage");
-        log.debug("onMessage - Message: {}", message);
+        log.info("onMessage - Message: {}", message);
     }
 
     public void send(String message) {

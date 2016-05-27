@@ -24,12 +24,12 @@
 
 package com.cmbc.most.mapper;
 
-import com.cmbc.most.model.UserInfo;
+import com.cmbc.most.model.AppInfo;
 import com.cmbc.most.util.MyMapper;
 
 /**
- * @author liuzh_3nofxnp
+ * @author Yan
  * @since 2016-01-22 22:17
  */
-public interface UserInfoMapper extends MyMapper<UserInfo> {
+public interface AppInfoMapper extends MyMapper<AppInfo> {
 }

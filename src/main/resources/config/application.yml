@@ -1,5 +1,5 @@
 server:
-    port: 8080
+    port: 8880
     context-path: #/liuzh/
 
 logging:
@@ -28,24 +28,17 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
-    mvc:
-        view:
-            prefix: /templates/
-            suffix: .ftl
-    freemarker:
-        cache: false
-        request-context-attribute: request
 
 cmbc:
   most:
     mq:
-      queueManager: QM.MESSAGE.SDR
+      queueManager: QM_Yan
       host: 9.110.83.36
       port: 1414
-      channel: SYSTEM.DEF.SVRCONN
+      channel: CNN_Yan
       CCSID: 1381
-      incomingQueue: DEAD.MESSAGE
-      outgoingQueue: MESSAGE
+      incomingQueue: LQ01
+      outgoingQueue: LQ01
 
 #以下属性不可用
 #mybatis:

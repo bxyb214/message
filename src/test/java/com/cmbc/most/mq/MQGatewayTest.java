@@ -1,6 +1,8 @@
 package com.cmbc.most.mq;
 
 import com.cmbc.most.Application;
+import com.ibm.mq.jms.MQConnectionFactory;
+import com.ibm.msg.client.wmq.common.CommonConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -12,6 +14,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import javax.jms.JMSException;
+
+import static org.junit.Assert.assertThat;
+import static sun.nio.cs.Surrogate.is;
 
 /**
  * Created by Yan on 2016/5/21.
