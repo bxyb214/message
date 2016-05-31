@@ -50,7 +50,6 @@ public class JMSConfig {
     @Bean(name = "JmsTemplate")
     public JmsTemplate provideJmsTemplate() {
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
-        jmsTemplate.setPubSubNoLocal(false);
         return jmsTemplate;
     }
 
@@ -75,7 +74,4 @@ public class JMSConfig {
         String incomingQueue;
         String outgoingQueue;
     }
-
-
-
 }

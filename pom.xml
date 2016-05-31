@@ -139,6 +139,14 @@
             <systemPath>${basedir}/lib/allclient.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>com.cmbc.most.message</groupId>
+            <artifactId>client</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/client-1.0.0.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <build>
