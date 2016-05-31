@@ -1,2 +1,10 @@
-${AnsiColor.BRIGHT_BLUE}:: SongZi 🤓  :: Running Spring Boot ${spring-boot.version} ::
+ $$$$$$\  $$\      $$\ $$$$$$$\   $$$$$$\
+$$  __$$\ $$$\    $$$ |$$  __$$\ $$  __$$\
+$$ /  \__|$$$$\  $$$$ |$$ |  $$ |$$ /  \__|
+$$ |      $$\$$\$$ $$ |$$$$$$$\ |$$ |
+$$ |      $$ \$$$  $$ |$$  __$$\ $$ |
+$$ |  $$\ $$ |\$  /$$ |$$ |  $$ |$$ |  $$\
+\$$$$$$  |$$ | \_/ $$ |$$$$$$$  |\$$$$$$  |
+ \______/ \__|     \__|\_______/  \______/
+${AnsiColor.BRIGHT_BLUE}:: SongZi :: Running Spring Boot ${spring-boot.version} ::
 :: http://gitlab.cyanway-lab.com/hx-insurance/hx-insurance-server.git ::${AnsiColor.DEFAULT}

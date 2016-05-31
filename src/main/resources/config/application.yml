@@ -39,6 +39,10 @@ cmbc:
       CCSID: 1381
       incomingQueue: LQ01
       outgoingQueue: LQ01
+    async:
+      corePoolSize: 1
+      MaxPoolSize: 10
+      QueueCapacity: 1000
 
 #以下属性不可用
 #mybatis:

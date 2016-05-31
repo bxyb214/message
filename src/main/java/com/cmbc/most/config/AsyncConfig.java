@@ -2,11 +2,10 @@ package com.cmbc.most.config;
 
 import com.cmbc.most.async.ExceptionHandlingAsyncTaskExecutor;
 import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -21,15 +20,14 @@ import java.util.concurrent.Executor;
  * Created by Yan on 16/5/31.
  */
 @Configuration
+@EnableConfigurationProperties(AsyncConfig.AsyncProperties.class)
 @EnableAsync
 @EnableScheduling
+@lombok.extern.slf4j.Slf4j
 public class AsyncConfig implements AsyncConfigurer {
-
-    private final Logger log = LoggerFactory.getLogger(AsyncConfig.class);
 
     @Inject
     AsyncConfig.AsyncProperties properties;
-
 
     @Override
     @Bean(name = "taskExecutor")
@@ -48,12 +46,11 @@ public class AsyncConfig implements AsyncConfigurer {
         return new SimpleAsyncUncaughtExceptionHandler();
     }
 
-    @ConfigurationProperties(prefix = "cmbc.most.mq")
+    @ConfigurationProperties(prefix = "cmbc.most.async")
     @Data
     public static class AsyncProperties {
         int corePoolSize;
         int MaxPoolSize;
         int QueueCapacity;
-
     }
 }
