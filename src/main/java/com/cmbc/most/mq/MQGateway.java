@@ -27,8 +27,8 @@ public class MQGateway {
 
     @JmsListener(destination = "${cmbc.most.mq.incomingQueue}", containerFactory = "DefaultJmsListenerContainerFactory")
     public void onMessage(TextMessage message) throws JMSException {
-        log.info("onMessage");
-        log.info("onMessage - Message: {}", message);
+        log.info("onMessage - Message: {}", message.getText());
+
     }
 
     public void send(String message) {
