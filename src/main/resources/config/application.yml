@@ -32,13 +32,13 @@ spring:
 cmbc:
   most:
     mq:
-      queueManager: QM_Yan
-      host: 9.110.83.36
+      queueManager: QM_TIPS_2027100000_01
+      host: 195.216.145.19
       port: 1414
-      channel: CNN_Yan
-      CCSID: 1381
-      incomingQueue: LQ01
-      outgoingQueue: LQ01
+      channel: SVRCONN
+      CCSID: 819
+      incomingQueue: PBC.2600.ONLINE.TRAN
+      outgoingQueue: PBC.2600.ONLINE.TRAN
     async:
       corePoolSize: 1
       MaxPoolSize: 10

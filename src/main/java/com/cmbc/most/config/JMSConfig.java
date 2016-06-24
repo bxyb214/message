@@ -1,5 +1,7 @@
 package com.cmbc.most.config;
 
+import com.cmbc.most.message.jmx.client.CMBCConnectionFactory;
+import com.cmbc.most.message.jmx.client.CMBCMQProperties;
 import com.ibm.mq.jms.MQConnectionFactory;
 import com.ibm.mq.jms.MQQueueConnectionFactory;
 import com.ibm.mq.jms.MQXAConnectionFactory;
@@ -31,19 +33,19 @@ public class JMSConfig {
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        MQQueueConnectionFactory factory = null;
+        ConnectionFactory factory = null;
+
         try {
-            factory = new MQQueueConnectionFactory();
-            factory.setHostName(properties.getHost());
-            factory.setPort(properties.getPort());
-            factory.setQueueManager(properties.getQueueManager());
-            factory.setChannel(properties.getChannel());
-            factory.setCCSID(properties.getCCSID());
-            factory.setTransportType(WMQConstants.WMQ_CM_CLIENT);
+            CMBCMQProperties cmbcmqProperties = new CMBCMQProperties();
+            cmbcmqProperties.setHost(properties.getHost());
+            cmbcmqProperties.setPort(properties.getPort());
+            cmbcmqProperties.setQueueManager(properties.getQueueManager());
+            cmbcmqProperties.setChannel(properties.getChannel());
+            cmbcmqProperties.setCCSID(properties.getCCSID());
+            factory = CMBCConnectionFactory.getCMBCConnectionFactoryInstance(cmbcmqProperties);
         } catch (JMSException e) {
             throw new RuntimeException(e);
         }
-
         return factory;
     }
 

@@ -13,6 +13,7 @@ import javax.jms.TextMessage;
 /**
  * Created by Yan on 2016/5/21.
  */
+
 @Named
 @Transactional
 @lombok.extern.slf4j.Slf4j
@@ -25,7 +26,7 @@ public class MQGateway {
     private JMSConfig.MQProperties properties;
 
     @JmsListener(destination = "${cmbc.most.mq.incomingQueue}", containerFactory = "DefaultJmsListenerContainerFactory")
-    public void onMessage(String message) throws JMSException {
+    public void onMessage(TextMessage message) throws JMSException {
         log.info("onMessage");
         log.info("onMessage - Message: {}", message);
     }
