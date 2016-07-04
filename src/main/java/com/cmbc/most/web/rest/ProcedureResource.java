@@ -24,8 +24,8 @@
 
 package com.cmbc.most.web.rest;
 
-import com.cmbc.most.model.Procedure;
-import com.cmbc.most.service.ProcedureService;
+import com.cmbc.most.model.AppSetting;
+import com.cmbc.most.service.AppSettingService;
 import com.cmbc.most.web.rest.util.HeaderUtil;
 import com.cmbc.most.web.rest.util.PaginationUtil;
 import com.github.pagehelper.PageInfo;
@@ -51,7 +51,7 @@ import java.util.List;
 public class ProcedureResource {
 
     @Inject
-    private ProcedureService procedureService;
+    private AppSettingService procedureService;
 
     /**
      * GET  /procedures -> 获取所有规则.
@@ -59,8 +59,8 @@ public class ProcedureResource {
     @RequestMapping(value = "/procedures",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Procedure>> getAll(Procedure procedure) throws URISyntaxException {
-        List<Procedure> procedureList = procedureService.getAll(procedure);
+    public ResponseEntity<List<AppSetting>> getAll(AppSetting procedure) throws URISyntaxException {
+        List<AppSetting> procedureList = procedureService.getAll(procedure);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageInfo<>(procedureList), "/api/procedures");
         return new ResponseEntity<>(procedureList, headers, HttpStatus.OK);
     }
@@ -71,8 +71,8 @@ public class ProcedureResource {
     @RequestMapping(value = "/procedure/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Procedure view(@PathVariable Integer id) {
-        Procedure procedure = procedureService.getById(id);
+    public AppSetting view(@PathVariable Integer id) {
+        AppSetting procedure = procedureService.getById(id);
         return procedure;
     }
 
@@ -94,7 +94,7 @@ public class ProcedureResource {
     @RequestMapping(value = "/procedure",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> add(Procedure procedure) {
+    public ResponseEntity<?> add(AppSetting procedure) {
         procedureService.save(procedure);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -105,7 +105,7 @@ public class ProcedureResource {
     @RequestMapping(value = "/procedure",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(Procedure procedure) {
+    public ResponseEntity<?> save(AppSetting procedure) {
         if(procedure.getId() == null){
            return add(procedure);
         }

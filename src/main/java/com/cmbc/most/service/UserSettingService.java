@@ -22,21 +22,47 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.model;
+package com.cmbc.most.service;
 
-import lombok.Data;
+import com.cmbc.most.mapper.UserSettingMapper;
+import com.cmbc.most.mapper.UserSettingMapper;
+import com.cmbc.most.model.UserSetting;
+import com.github.pagehelper.PageHelper;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.inject.Inject;
+import java.util.List;
 
 /**
- * 用户信息
- *
  * @author Yan
- * @since 2016-01-31 21:39
+ * @since 2015-12-19 11:09
  */
-@Data
-public class AppInfo extends BaseEntity {
+@Service
+public class UserSettingService {
 
-    private String name;
+    @Inject
+    private UserSettingMapper userSettingMapper;
+
+    public List<UserSetting> getAll(UserSetting userSetting) {
+        if (userSetting.getPage() != null && userSetting.getRows() != null) {
+            PageHelper.startPage(userSetting.getPage(), userSetting.getRows(), "id");
+        }
+        return userSettingMapper.selectAll();
+    }
+
+    public UserSetting getById(Integer id) {
+        return userSettingMapper.selectByPrimaryKey(id);
+    }
+
+    public void deleteById(Integer id) {
+        userSettingMapper.deleteByPrimaryKey(id);
+    }
+
+    public void save(UserSetting userSetting) {
+        if (userSetting.getId() != null) {
+            userSettingMapper.updateByPrimaryKey(userSetting);
+        } else {
+            userSettingMapper.insert(userSetting);
+        }
+    }
 }

@@ -25,8 +25,8 @@
 package com.cmbc.most.mapper;
 
 import com.cmbc.most.util.MyMapper;
-import com.cmbc.most.model.Procedure;
+import com.cmbc.most.model.AppSetting;
 
-public interface ProcedureMapper extends MyMapper<Procedure> {
+public interface AppSettingMapper extends MyMapper<AppSetting> {
 
 }

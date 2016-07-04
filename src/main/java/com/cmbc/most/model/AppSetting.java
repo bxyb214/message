@@ -9,7 +9,7 @@ import java.util.Date;
  * 规则表
  */
 @Data
-public class Procedure extends BaseEntity {
+public class AppSetting extends BaseEntity {
 
     /**
      *  应用来源
@@ -27,8 +27,13 @@ public class Procedure extends BaseEntity {
     private Date sendTime;
 
     /**
-     * 发送间隔 按秒计算
+     * 静默开启时间
      */
-    private Long inteval;
+    private String silenceStartTime;
+
+    /**
+     * 静默结束时间
+     */
+    private String silenceEndTime;
 
 }

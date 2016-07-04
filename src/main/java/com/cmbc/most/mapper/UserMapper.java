@@ -22,46 +22,12 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.service;
+package com.cmbc.most.mapper;
 
-import com.cmbc.most.mapper.SMSMapper;
-import com.cmbc.most.model.SMS;
-import com.github.pagehelper.PageHelper;
-import org.springframework.stereotype.Service;
+import com.cmbc.most.model.User;
+import com.cmbc.most.model.UserSetting;
+import com.cmbc.most.util.MyMapper;
 
-import javax.inject.Inject;
-import java.util.List;
+public interface UserMapper extends MyMapper<User> {
 
-/**
- * @author Yan
- * @since 2015-12-19 11:09
- */
-@Service
-public class SMSService {
-
-    @Inject
-    private SMSMapper smsMapper;
-
-    public List<SMS> getAll(SMS sms) {
-        if (sms.getPage() != null && sms.getRows() != null) {
-            PageHelper.startPage(sms.getPage(), sms.getRows(), "id");
-        }
-        return smsMapper.selectAll();
-    }
-
-    public SMS getById(Integer id) {
-        return smsMapper.selectByPrimaryKey(id);
-    }
-
-    public void deleteById(Integer id) {
-        smsMapper.deleteByPrimaryKey(id);
-    }
-
-    public void save(SMS sms) {
-        if (sms.getId() != null) {
-            smsMapper.updateByPrimaryKey(sms);
-        } else {
-            smsMapper.insert(sms);
-        }
-    }
 }

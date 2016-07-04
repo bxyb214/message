@@ -24,13 +24,13 @@
 
 package com.cmbc.most.mapper;
 
-import com.cmbc.most.model.EMail;
+import com.cmbc.most.model.MessageEntity;
 import com.cmbc.most.util.MyMapper;
 
 /**
  * @author Yan
  * @since 2016-01-22 22:17
  */
-public interface EMailMapper extends MyMapper<EMail> {
+public interface MessageMapper extends MyMapper<MessageEntity> {
 
 }

@@ -22,48 +22,23 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.service;
+package com.cmbc.most.model;
 
-import com.cmbc.most.mapper.ProcedureMapper;
-import com.cmbc.most.mapper.SMSMapper;
-import com.cmbc.most.model.Procedure;
-import com.cmbc.most.model.SMS;
-import com.github.pagehelper.PageHelper;
-import org.springframework.stereotype.Service;
-
-import javax.inject.Inject;
-import java.util.List;
+import lombok.Data;
 
 /**
+ * 用户信息
+ *
  * @author Yan
- * @since 2015-12-19 11:09
+ * @since 2016-01-31 21:39
  */
-@Service
-public class ProcedureService {
+@Data
+public class User extends BaseEntity {
 
-    @Inject
-    private ProcedureMapper procedureMapper;
+    private String username;
+    private String password;
+    private Integer status;
+    private String email;
+    private String phone;
 
-    public List<Procedure> getAll(Procedure procedure) {
-        if (procedure.getPage() != null && procedure.getRows() != null) {
-            PageHelper.startPage(procedure.getPage(), procedure.getRows(), "id");
-        }
-        return procedureMapper.selectAll();
-    }
-
-    public Procedure getById(Integer id) {
-        return procedureMapper.selectByPrimaryKey(id);
-    }
-
-    public void deleteById(Integer id) {
-        procedureMapper.deleteByPrimaryKey(id);
-    }
-
-    public void save(Procedure procedure) {
-        if (procedure.getId() != null) {
-            procedureMapper.updateByPrimaryKey(procedure);
-        } else {
-            procedureMapper.insert(procedure);
-        }
-    }
 }

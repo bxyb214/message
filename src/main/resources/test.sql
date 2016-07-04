@@ -1,69 +1,79 @@
 ﻿USE `test`;
 
-DROP TABLE IF EXISTS `email`;
-CREATE TABLE `email` (
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `uuid` varchar(16) DEFAULT NULL COMMENT '唯一编码',
-  `app_id` int(11) DEFAULT NULL COMMENT '应用来源',
+  `uuid` varchar(16) NOT NULL UNIQUE COMMENT '唯一编码',
+  `app_id` int(11) NOT NULL COMMENT '应用来源',
   `created_date` datetime NOT NULL DEFAULT NOW() COMMENT '创建时间',
   `send_date` datetime NOT NULL DEFAULT NOW() COMMENT '发送时间',
-  `procedure_id` int(11) DEFAULT NULL COMMENT '规则代码',
-  `status` int(11) DEFAULT NULL COMMENT '状态',
-  `success` int(11) DEFAULT NULL COMMENT '成功个数',
-  `fail` int(11) DEFAULT NULL COMMENT '失败个数',
+  `status` int(1) DEFAULT 1 COMMENT '状态',
+  `send` boolean DEFAULT false COMMENT '发送成功',
+  `important` boolean DEFAULT false COMMENT '重要消息',
 
-  `mail_subject` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件标题',
-  `mail_from` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件发件人',
-  `mail_to` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件收件人',
-  `mail_body` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件内容',
+  `subject` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件标题',
+  `from` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件发件人',
+  `to` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件收件人',
+  `body` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件内容',
+
+  `error_code` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '错误码',
+  `error_description` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '错误信息',
 
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息';
 
-DROP TABLE IF EXISTS `sms`;
-CREATE TABLE `sms` (
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `uuid` varchar(16) DEFAULT NULL COMMENT '唯一编码',
-  `app_id` int(11) DEFAULT NULL COMMENT '应用来源',
-  `created_date` datetime NOT NULL DEFAULT NOW() COMMENT '创建时间',
-  `send_date` datetime NOT NULL DEFAULT NOW() COMMENT '发送时间',
-  `procedure_id` int(11) DEFAULT NULL COMMENT '规则代码',
-  `status` int(11) DEFAULT NULL COMMENT '状态',
-  `success` int(11) DEFAULT NULL COMMENT '成功个数',
-  `fail` int(11) DEFAULT NULL COMMENT '失败个数',
-
-  `sms_content` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '短信内容',
-  `sms_recevier` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '邮件发件人',
+  `username` varchar(16) NOT NULL UNIQUE COMMENT '用户名',
+  `password` varchar(16) NOT NULL COMMENT '密码',
+  `status` int(1) NOT NULL DEFAULT 1 COMMENT '状态',
+  `email` varchar(255) CHARACTER SET utf8 UNIQUE COMMENT '邮件',
+  `phone` varchar(255) CHARACTER SET utf8 UNIQUE COMMENT '手机号',
 
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';
 
+DROP TABLE IF EXISTS `user_setting`;
+CREATE TABLE `user_setting` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` varchar(16) NOT NULL COMMENT '用户',
+  `app_id` varchar(16) NOT NULL COMMENT '应用',
+  `status` int(1) NOT NULL DEFAULT 1 COMMENT '状态',
 
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配置';
 
 
 CREATE TABLE `app_info` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL DEFAULT '' COMMENT '用户名',
-  `password` varchar(32) DEFAULT NULL COMMENT '密码',
-  `enabled` int(2) DEFAULT NULL COMMENT '是否可用',
-  `realname` varchar(32) DEFAULT NULL COMMENT '真实姓名',
-  `qq` varchar(14) DEFAULT NULL COMMENT 'QQ',
-  `email` varchar(100) DEFAULT NULL,
-  `tel` varchar(255) DEFAULT NULL COMMENT '联系电话',
+  `name` varchar(32) NOT NULL UNIQUE COMMENT 'APP名称',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='应用信息表';
 
+DROP TABLE IF EXISTS `app_setting`;
+CREATE TABLE `app_setting` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `app_id` varchar(16) NOT NULL COMMENT '应用',
+  `send_limit` int(1) DEFAULT 0 COMMENT '重发次数',
+  `send_time` datetime COMMENT '重发时间',
+  `silence_start_time` time COMMENT '静默开始时间',
+  `silence_end_time` time COMMENT '静默开始时间',
+
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用配置';
+
 -- 应用信息
-INSERT INTO `app_info` VALUES ('1', 'test1', 'ffff', '1', null, null, null, null);
-INSERT INTO `app_info` VALUES ('2', 'test2', 'aaaa', '2', null, null, null, null);
-INSERT INTO `app_info` VALUES ('3', 'test3', 'bbbb', '1', null, null, null, null);
-INSERT INTO `app_info` VALUES ('4', 'test4', 'cccc', '2', null, null, null, null);
-INSERT INTO `app_info` VALUES ('5', 'test5', 'dddd', '1', null, null, null, null);
+INSERT INTO `app_info` VALUES (1, 'testapp1');
+INSERT INTO `app_info` VALUES (2, 'testapp2');
 
--- 邮件信息
-INSERT INTO `email` VALUES (1,'0111111111111111', 1, '2016-01-01 12:00:00', '2016-01-01 12:00:00', null, 1, 1, 0, 'test01', 'from01@localhost', 'to01@localhost', 'test01body');
-INSERT INTO `email` VALUES (2,'0222222222222222', 1, '2016-01-01 12:00:00', '2016-01-01 12:00:00', null, 1, 1, 0, 'test02', 'from02@localhost', 'to02@localhost', 'test02body');
+-- 用户信息
+INSERT INTO `user` VALUES (1, 'testuser1', '111111', 1, 'testuser1@localhost', '18611897539');
+INSERT INTO `user` VALUES (2, 'testuser2', '111111', 1, 'testuser2@localhost', '18511897539');
 
--- 短信消息
-INSERT INTO `sms` VALUES (1,'1111111111111111', 1, '2016-01-01 12:00:00', '2016-01-01 12:00:00', null, 1, 1, 0, 'test01', '18511897539');
-INSERT INTO `sms` VALUES (2,'1222222222222222', 1, '2016-01-01 12:00:00', '2016-01-01 12:00:00', null, 1, 1, 0, 'test02', '15055119876');
+-- 应用配置
+INSERT INTO `app_setting` VALUES (1, 2, 0, 2016-07-04 14:29:30, 14:00:30, 14:29:30);
+
+-- 用户配置
+INSERT INTO `user_setting` VALUES (1, 1, 1, 1);

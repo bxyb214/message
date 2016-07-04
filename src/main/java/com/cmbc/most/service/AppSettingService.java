@@ -22,20 +22,46 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.model;
+package com.cmbc.most.service;
 
-import javax.persistence.Table;
+import com.cmbc.most.mapper.AppSettingMapper;
+import com.cmbc.most.model.AppSetting;
+import com.github.pagehelper.PageHelper;
+import org.springframework.stereotype.Service;
 
-@Table(name = "sms")
-public class SMS extends MessageEntity {
+import javax.inject.Inject;
+import java.util.List;
 
-    /**
-     *  消息内容
-     */
-    private String smsContent;
+/**
+ * @author Yan
+ * @since 2015-12-19 11:09
+ */
+@Service
+public class AppSettingService {
 
-    /**
-     * 接收者
-     */
-    private String smsRecevier;
+    @Inject
+    private AppSettingMapper procedureMapper;
+
+    public List<AppSetting> getAll(AppSetting procedure) {
+        if (procedure.getPage() != null && procedure.getRows() != null) {
+            PageHelper.startPage(procedure.getPage(), procedure.getRows(), "id");
+        }
+        return procedureMapper.selectAll();
+    }
+
+    public AppSetting getById(Integer id) {
+        return procedureMapper.selectByPrimaryKey(id);
+    }
+
+    public void deleteById(Integer id) {
+        procedureMapper.deleteByPrimaryKey(id);
+    }
+
+    public void save(AppSetting procedure) {
+        if (procedure.getId() != null) {
+            procedureMapper.updateByPrimaryKey(procedure);
+        } else {
+            procedureMapper.insert(procedure);
+        }
+    }
 }

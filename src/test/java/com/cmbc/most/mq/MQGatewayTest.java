@@ -1,6 +1,7 @@
 package com.cmbc.most.mq;
 
 import com.cmbc.most.Application;
+import com.cmbc.most.message.Message;
 import com.ibm.mq.jms.MQConnectionFactory;
 import com.ibm.msg.client.wmq.common.CommonConstants;
 import org.junit.Test;
@@ -36,6 +37,10 @@ public class MQGatewayTest {
 
     @Test
     public void testMessageSender(){
-        mqGateway.send("testest");
+
+        Message message = new Message();
+        message.setAppId(11111);
+        message.setUuid("111111111111");
+        mqGateway.send(message.toJson(message));
     }
 }

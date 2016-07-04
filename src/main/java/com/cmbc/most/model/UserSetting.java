@@ -22,11 +22,19 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.mapper;
+package com.cmbc.most.model;
 
-import com.cmbc.most.model.SMS;
-import com.cmbc.most.util.MyMapper;
+import lombok.Data;
 
-public interface SMSMapper extends MyMapper<SMS> {
-
+/**
+ * 用户信息
+ *
+ * @author Yan
+ * @since 2016-01-31 21:39
+ */
+@Data
+public class UserSetting extends BaseEntity {
+    private Integer userId;
+    private Integer AppId;
+    private Integer status;
 }

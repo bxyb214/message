@@ -22,21 +22,11 @@
  * THE SOFTWARE.
  */
 
-package com.cmbc.most.model;
+package com.cmbc.most.mapper;
 
-import lombok.Data;
+import com.cmbc.most.model.UserSetting;
+import com.cmbc.most.util.MyMapper;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+public interface UserSettingMapper extends MyMapper<UserSetting> {
 
-/**
- * 用户信息
- *
- * @author Yan
- * @since 2016-01-31 21:39
- */
-@Data
-public class AppInfo extends BaseEntity {
-
-    private String name;
 }

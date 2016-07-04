@@ -24,13 +24,11 @@
 
 package com.cmbc.most.service;
 
-import com.cmbc.most.mapper.EMailMapper;
-import com.cmbc.most.model.EMail;
+import com.cmbc.most.mapper.MessageMapper;
+import com.cmbc.most.message.Message;
+import com.cmbc.most.model.MessageEntity;
 import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.cmbc.most.mapper.SMSMapper;
-import com.cmbc.most.model.SMS;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -40,31 +38,42 @@ import java.util.List;
  * @since 2015-12-19 11:09
  */
 @Service
-public class EMailService {
+public class MessageService {
 
     @Inject
-    private EMailMapper emailMapper;
+    private MessageMapper MessageMapper;
 
-    public List<EMail> getAll(EMail email) {
-        if (email.getPage() != null && email.getRows() != null) {
-            PageHelper.startPage(email.getPage(), email.getRows(), "id");
+    public List<MessageEntity> getAll(MessageEntity message) {
+        if (message.getPage() != null && message.getRows() != null) {
+            PageHelper.startPage(message.getPage(), message.getRows(), "id");
         }
-        return emailMapper.selectAll();
+        return MessageMapper.selectAll();
     }
 
-    public EMail getById(Integer id) {
-        return emailMapper.selectByPrimaryKey(id);
+    public MessageEntity getById(Integer id) {
+        return MessageMapper.selectByPrimaryKey(id);
     }
 
     public void deleteById(Integer id) {
-        emailMapper.deleteByPrimaryKey(id);
+        MessageMapper.deleteByPrimaryKey(id);
     }
 
-    public void save(EMail email) {
-        if (email.getId() != null) {
-            emailMapper.updateByPrimaryKey(email);
+    public void save(MessageEntity Message) {
+        if (Message.getId() != null) {
+            MessageMapper.updateByPrimaryKey(Message);
         } else {
-            emailMapper.insert(email);
+            MessageMapper.insert(Message);
+        }
+    }
+
+    public void save(Message message) {
+
+        MessageEntity messageEntity = new MessageEntity(message);
+
+        if (messageEntity.getId() != null) {
+            MessageMapper.updateByPrimaryKey(messageEntity);
+        } else {
+            MessageMapper.insert(messageEntity);
         }
     }
 }

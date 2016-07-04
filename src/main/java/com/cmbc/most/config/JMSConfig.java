@@ -2,10 +2,6 @@ package com.cmbc.most.config;
 
 import com.cmbc.most.message.jmx.client.CMBCConnectionFactory;
 import com.cmbc.most.message.jmx.client.CMBCMQProperties;
-import com.ibm.mq.jms.MQConnectionFactory;
-import com.ibm.mq.jms.MQQueueConnectionFactory;
-import com.ibm.mq.jms.MQXAConnectionFactory;
-import com.ibm.msg.client.wmq.WMQConstants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -14,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
@@ -33,20 +28,21 @@ public class JMSConfig {
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        ConnectionFactory factory = null;
+        CMBCConnectionFactory cmbcConnectionFactory = null;
 
         try {
+            cmbcConnectionFactory = new CMBCConnectionFactory();
             CMBCMQProperties cmbcmqProperties = new CMBCMQProperties();
             cmbcmqProperties.setHost(properties.getHost());
             cmbcmqProperties.setPort(properties.getPort());
             cmbcmqProperties.setQueueManager(properties.getQueueManager());
             cmbcmqProperties.setChannel(properties.getChannel());
             cmbcmqProperties.setCCSID(properties.getCCSID());
-            factory = CMBCConnectionFactory.getCMBCConnectionFactoryInstance(cmbcmqProperties);
+            cmbcConnectionFactory.setCmbcmqProperties(cmbcmqProperties);
         } catch (JMSException e) {
             throw new RuntimeException(e);
         }
-        return factory;
+        return cmbcConnectionFactory;
     }
 
     @Bean(name = "JmsTemplate")

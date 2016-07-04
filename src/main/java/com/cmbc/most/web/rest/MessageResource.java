@@ -24,8 +24,8 @@
 
 package com.cmbc.most.web.rest;
 
-import com.cmbc.most.model.SMS;
-import com.cmbc.most.service.SMSService;
+import com.cmbc.most.model.MessageEntity;
+import com.cmbc.most.service.MessageService;
 import com.cmbc.most.web.rest.util.PaginationUtil;
 import com.github.pagehelper.PageInfo;
 import org.springframework.http.HttpHeaders;
@@ -46,10 +46,10 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/api")
-public class SMSResource {
+public class MessageResource {
 
     @Inject
-    private SMSService smsService;
+    private MessageService messageService;
 
     /**
      * GET  /smss -> 获取一页短信.
@@ -57,8 +57,8 @@ public class SMSResource {
     @RequestMapping(value = "/smss",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SMS>> getAll(SMS sms) throws URISyntaxException {
-        List<SMS> smsList = smsService.getAll(sms);
+    public ResponseEntity<List<MessageEntity>> getAll(MessageEntity message) throws URISyntaxException {
+        List<MessageEntity> smsList = messageService.getAll(message);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageInfo<>(smsList), "/api/countries");
         return new ResponseEntity<>(smsList, headers, HttpStatus.OK);
     }
